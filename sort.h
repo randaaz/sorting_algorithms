@@ -33,12 +33,9 @@ void quick_sort(int *array, size_t size);
 void heap_sort(int *array, size_t size);
 void cocktail_sort_list(listint_t **list);
 listint_t *sw_no(listint_t *no, listint_t **list);
-<<<<<<< HEAD
 void merge_sort(int *array, size_t size);
-=======
 void shell_sort(int *array, size_t size);
 void heap_sort(int *array, size_t size);
 void bitonic_sort(int *array, size_t size);
->>>>>>> 5936c17890d108017e1ef47a514b82fad1b5f689
 
 #endif

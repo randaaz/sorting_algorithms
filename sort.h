@@ -30,6 +30,11 @@ void s_n(int *arr, size_t sz1, int *r, int *d);
 size_t lomuto_partition(int *array, size_t fz, ssize_t ls, ssize_t ho);
 void qu_so_me(int *array, size_t fz, ssize_t ls, ssize_t ho);
 void quick_sort(int *array, size_t size);
+<<<<<<< HEAD
 void heap_sort(int *array, size_t size);
+=======
+void cocktail_sort_list(listint_t **list);
+listint_t *sw_no(listint_t *no, listint_t **list);
+>>>>>>> 0f8d283f821a238f81817c90116757d98d202001
 
 #endif

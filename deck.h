@@ -3,7 +3,7 @@
 
 /**
  * enum kind_e - Represents the suits of a
- * standard deck of playing cards.
+ * standard deck of playing cards
  * @SPADE: Spade suit.
  * @HEART: Heart suit.
  * @CLUB: Club suit.

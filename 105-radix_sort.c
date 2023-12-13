@@ -47,11 +47,9 @@ void co_So(int *ar, size_t num, int exp, int *op)
 }
 
 /**
- * co_So - Sorts an array of integers using the Counting Sort algorithm.
- * @ar: The array to be sorted.
- * @num: Number of elements in the array.
- * @exp: The current digit place value (1, 10, 100, ...).
- * @op: The output array to store sorted elements.
+ * radix_sort - Sorts an array
+ * @array: The array to be sorted.
+ * @size: The size of the array.
  */
 void radix_sort(int *array, size_t size)
 {

@@ -89,7 +89,7 @@ void m_t(int *ar, int *tp, int st, int lo)
 	}
 }
 /**
- * merge_sort - Sorts an array using the merge sort algorithm
+ * merge_sort - Sorts an array
  * @array: Array to be sorted
  * @size: Size of the array
  */

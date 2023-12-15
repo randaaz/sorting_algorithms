@@ -1,71 +1,45 @@
 #include "sort.h"
-#define parent(x) (((x) - 1) / 2)
-#define left_child(x) (((x) * 2) + 1)
+#include <stdio.h>
 
 /**
- * s_n - Function to swap two integers in an array and print the array
- * @arr: Pointer to the array of integers
- * @sz1: Size of the array
- * @r: Pointer to the first integer to be swapped
- * @d: Pointer to the second integer to be swapped
+ * _so - Swap two integers.
+ * @c: Pointer to the first integer.
+ * @d: Pointer to the second integer.
  */
-void s_n(int *arr, size_t sz1, int *r, int *d)
-{
-	if (*r != *d)
-	{
-		*r = *r + *d;
-		*d = *r - *d;
-		*r = *r - *d;
-		print_array((const int *)arr, sz1);
-	}
 
+void _so(int *c, int *d)
+{
+	int r = *c;
+
+	*c = *d;
+	*d = r;
 }
 
 /**
- * _sif - Perform the heapify operation on a subtree rooted at index 'st'.
- *
- * @array: The array of integers to be modified.
- * @st: The index of the subtree to be heapified.
- * @ed: The end index of the heap.
- * @size: The size of the array.
+ * _max_me - Heapify subtree rooted at given index.
+ * @array: Array of integers.
+ * @size: Size of the array.
+ * @ind: Index of the root of the subtree.
+ * @n: Size of the heap.
  */
 
-void _sif(int *array, size_t st, size_t ed, size_t size)
+void _max_me(int *array, size_t size, int ind, size_t n)
 {
-	size_t r = st, _sp_me, ch;
+	int lar = ind;
+	int lf = 2 * ind + 1;
+	int rt = 2 * ind + 2;
 
-	while (left_child(r) <= ed)
+	if (lf < (int)n && array[lf] > array[lar])
+		lar = lf;
+
+	if (rt < (int)n && array[rt] > array[lar])
+		lar = rt;
+
+	if (lar != ind)
 	{
-		ch = left_child(r);
-		_sp_me = r;
-		if (array[_sp_me] < array[ch])
-			_sp_me = ch;
-		if (ch + 1 <= ed && array[_sp_me] < array[ch + 1])
-			_sp_me = ch + 1;
-		if (_sp_me == r)
-			return;
-		s_n(array, size, &array[r], &array[_sp_me]);
-		r = _sp_me;
-	}
-
-}
-
-/**
- * _heap - Build a max heap from the array.
- *
- * @array: The array of integers to be modified.
- * @size: The size of the array.
- */
-
-void _heap(int *array, size_t size)
-{
-	ssize_t st;
-
-	st = parent(size - 1);
-	while (st >= 0)
-	{
-		_sif(array, st, size - 1, size);
-		st--;
+		_so(&array[ind], &array[lar]);
+		print_array(array, size);
+		_max_me(array, size, lar, n);
 	}
 }
 
@@ -79,16 +53,19 @@ void _heap(int *array, size_t size)
 
 void heap_sort(int *array, size_t size)
 {
-	size_t ed;
+	int j;
 
-	if (!array || size < 2)
+	if (array == NULL || size < 2)
 		return;
-	_heap(array, size);
-	ed = size - 1;
-	while (ed > 0)
+
+	for (j = (size - 2) / 2; j >= 0; --j)
+		_max_me(array, size, j, size);
+
+	for (j = (size - 1); j > 0; --j)
 	{
-		s_n(array, size, &array[ed], &array[0]);
-		ed--;
-		_sif(array, 0, ed, size);
+		_so(&array[0], &array[j]);
+		print_array(array, size);
+
+		_max_me(array, size, 0, j);
 	}
 }

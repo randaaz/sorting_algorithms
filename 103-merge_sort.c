@@ -1,71 +1,105 @@
 #include "sort.h"
+#include <stdio.h>
+
+
+
+void print_array(const int *array, size_t size);
+/**
+ * _new_me - Allocates memory for an array
+ * @num: Number of elements
+ * @size: Size of each element
+ *
+ * Return: A pointer to the allocated memory, or NULL if it fails
+ */
+void *_new_me(unsigned int num, unsigned int size)
+{
+	unsigned int ii = 0;
+	char *pp;
+
+	if (num == 0 || size == 0)
+		return ('\0');
+	pp = malloc(num * size);
+	if (pp == NULL)
+		return ('\0');
+	for (ii = 0; ii < (num * size); ii++)
+		pp[ii] = '\0';
+	return (pp);
+}
 
 /**
- * cal_me - Merges two halves of an array in ascending order
- * @array: The array to be sorted
- * @st: Starting index of the first half
- * @to: Ending index of the second half
- * @wo: Temporary array for merging
+ * m_me - Merges two subarrays
+ * @ar: Array to be sorted
+ * @tp: Temporary array
+ * @st: Starting index of the first subarray
+ * @mi: Middle index
+ * @lo: Ending index of the second subarray
  */
-void cal_me(int *array, size_t st, size_t to, int *wo)
+void m_me(int *ar, int *tp, int st, int mi, int lo)
 {
-	size_t ii = st, jj, kk, mi;
+	int s_l = mi - st + 1, s_r = lo - mi;
+	int *ar_t, *ar_r;
+	int le, ri, ii = 0;
 
-	jj = mi = (st + to) / 2;
+	ar_t = &tp[0];
+	ar_r = &tp[s_r];
+	for (le = 0; le < s_l; le++)
+		ar_t[le] = ar[st + le];
+	for (ri = 0; ri < s_r; ri++)
+		ar_r[ri] = ar[mi + 1 + ri];
+	le = 0, ri = 0, ii = st;
+	while (le < s_l && ri < s_r)
+	{
+		if (ar_t[le] <= ar_r[ri])
+			ar[ii] = ar_t[le], le++;
+		else
+			ar[ii] = ar_r[ri], ri++;
+		ii++;
+	}
+	while (le < s_l)
+		ar[ii] = ar_t[le], le++, ii++;
+	while (ri < s_r)
+		ar[ii] = ar_r[ri], ri++, ii++;
 	printf("Merging...\n");
 	printf("[left]: ");
-	print_array(array + st, mi - st);
+	print_array(ar_t, le);
 	printf("[right]: ");
-	print_array(array + mi, to - mi);
-	for (kk = st; kk < to; kk++)
-		if (ii < mi && (jj >= to || array[ii] <= array[jj]))
-		{
-			wo[kk] = array[ii++];
-		}
-		else
-		{
-			wo[kk] = array[jj++];
-		}
+	print_array(ar_r, ri);
+	printf("[Done]: ");
+	print_array(&ar[st], le + ri);
 }
 /**
- * m_so_do - Helper function for merge_sort
- * @arr: The array to be sorted
- * @st: Starting index of the sub-array
- * @to: Ending index of the sub-array
- * @wo: Temporary array for merging
+ * m_t - Recursively divides the array and calls merge function
+ * @ar: Array to be sorted
+ * @tp: Temporary array
+ * @st: Starting index
+ * @lo: Ending index
  */
-void m_so_do(int *arr, size_t st, size_t to, int *wo)
+void m_t(int *ar, int *tp, int st, int lo)
 {
-	size_t mi;
+	int mi;
 
-	mi = (st + to) / 2;
-	if (to - st < 2)
+	mi = (st + lo) / 2;
+	if ((st + lo) % 2 == 0)
+		mi--;
+	if (mi >= st)
 	{
-		return;
+		m_t(ar, tp, st, mi);
+		m_t(ar, tp, mi + 1, lo);
+		m_me(ar, tp, st, mi, lo);
 	}
-	m_so_do(wo, st, mi, arr);
-	m_so_do(wo, mi, to, arr);
-	cal_me(arr, st, to, wo);
 }
-
 /**
- * merge_sort - Sorts an array of integers
- * merge sort algorithm.
- * @array: The array to be sorted.
- * @size: The size of the array.
+ * merge_sort - Sorts an array using the merge sort algorithm
+ * @array: Array to be sorted
+ * @size: Size of the array
  */
 void merge_sort(int *array, size_t size)
 {
 	int *tp;
-	size_t ii;
 
 	if (!array || size < 2)
 		return;
-	tp = malloc(sizeof(int) * size);
-	if (!tp)
-		return;
-	for (ii = 0; ii < size; ii++)
-		tp[ii] = array[ii];
-	m_so_do(tp, 0, size, array);
+	tp = _new_me(size, sizeof(int));
+	m_t(array, tp, 0, size - 1);
 	free(tp);
 }

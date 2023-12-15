@@ -19,9 +19,9 @@ int g_M(int *ar, int num)
 }
 
 /**
- * co_So - Sorts an array of integers using the Counting Sort algorithm.
- * @ar: The array to be sorted.
- * @num: Number of elements in the array.
+ * co_So - Sorts an array of integers using the Counting Sort algorithm
+ * @ar: The array to be sorted
+ * @num: Number of elements in the array
  * @exp: The current digit place value (1, 10, 100, ...).
  * @op: The output array to store sorted elements.
  */

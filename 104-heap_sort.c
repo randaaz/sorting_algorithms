@@ -1,6 +1,6 @@
 #include "sort.h"
-#define par(x) (((x) - 1) / 2)
-#define left_ch(x) (((x) * 2) + 1)
+#define parent(x) (((x) - 1) / 2)
+#define left_child(x) (((x) * 2) + 1)
 
 /**
  * s_n - Function to swap two integers in an array and print the array
@@ -36,7 +36,7 @@ void _sif(int *array, size_t st, size_t ed, size_t size)
 
 	while (left_ch(r) <= ed)
 	{
-		ch = left_ch(r);
+		ch = left_child(r);
 		_sp_me = r;
 		if (array[_sp_me] < array[ch])
 			_sp_me = ch;
@@ -61,7 +61,7 @@ void _heap(int *array, size_t size)
 {
 	ssize_t st;
 
-	st = par(size - 1);
+	st = parent(size - 1);
 	while (st >= 0)
 	{
 		_sif(array, st, size - 1, size);

@@ -34,7 +34,7 @@ void _sif(int *array, size_t st, size_t ed, size_t size)
 {
 	size_t r = st, _sp_me, ch;
 
-	while (left_ch(r) <= ed)
+	while (left_child(r) <= ed)
 	{
 		ch = left_child(r);
 		_sp_me = r;
